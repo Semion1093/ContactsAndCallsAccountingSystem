@@ -16,7 +16,6 @@ builder.Services.AddControllers();
 builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddSwaggerGen(s => s.EnableAnnotations());
-builder.Services.AddSingleton<IContextFactory, ContextFactory>();
 
 var app = builder.Build();
 

@@ -9,10 +9,10 @@ namespace ContactsAndCallsAccountingSystem.DAL.Repositories
 {
     public class CallRepository : ICallRepository
     {
-        private readonly IContextFactory _context;
+        private readonly ContactsAndCallsAccountingSystemContext _context;
         private readonly IMapper _mapper;
 
-        public CallRepository(IContextFactory context, IMapper mapper)
+        public CallRepository(ContactsAndCallsAccountingSystemContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -21,9 +21,8 @@ namespace ContactsAndCallsAccountingSystem.DAL.Repositories
         public async Task<Guid> AddCall(AddCallModel CallModel)
         {
             var call = _mapper.Map<Call>(CallModel);
-            var context = _context.GetContext();
-            var addedCall = context.Calls.Add(call);
-            await context.SaveChangesAsync();
+            var addedCall = _context.Calls.Add(call);
+            await _context.SaveChangesAsync();
 
             return addedCall.Entity.Id;
         }
@@ -31,9 +30,8 @@ namespace ContactsAndCallsAccountingSystem.DAL.Repositories
         public async Task<Guid> AddConference(AddConferenceModel conferenceModel)
         {
             var conference = _mapper.Map<Call>(conferenceModel);
-            var context = _context.GetContext();
-            var addedConference = context.Calls.Add(conference);
-            await context.SaveChangesAsync();
+            var addedConference = _context.Calls.Add(conference);
+            await _context.SaveChangesAsync();
 
             return addedConference.Entity.Id;
         }
@@ -41,24 +39,21 @@ namespace ContactsAndCallsAccountingSystem.DAL.Repositories
         public async Task UpdateCall(CallModel callModel)
         {
             var call = _mapper.Map<Call>(callModel);
-            var context = _context.GetContext();
-            context.Update(call);
+            _context.Update(call);
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteCall(Guid id)
         {
-            var context = _context.GetContext();
-            context.Entry(new Call { Id = id, IsDeleted = true })
+            _context.Entry(new Call { Id = id, IsDeleted = true })
                 .Property(x => x.IsDeleted).IsModified = true;
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         public async Task<CallModel> GetCallById(Guid id)
         {
-            var context = _context.GetContext();
-            var call = await context.Calls
+            var call = await _context.Calls
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             return _mapper.Map<CallModel>(call);
@@ -66,8 +61,7 @@ namespace ContactsAndCallsAccountingSystem.DAL.Repositories
 
         public async Task<List<CallModel>> GetAllCalls()
         {
-            var context = _context.GetContext();
-            var calls = await context.Calls
+            var calls = await _context.Calls
                 .Where(x => !x.IsDeleted)
                 .Where(x => x.Calltype == CallType.Call)
                 .Include(x => x.CallProfile)
@@ -79,8 +73,7 @@ namespace ContactsAndCallsAccountingSystem.DAL.Repositories
 
         public async Task<List<CallModel>> GetAllConferences()
         {
-            var context = _context.GetContext();
-            var calls = await context.Calls
+            var calls = await _context.Calls
                 .Where(x => !x.IsDeleted)
                 .Where(x => x.Calltype == CallType.Conference)
                 .Include(x => x.CallProfile)
@@ -92,8 +85,7 @@ namespace ContactsAndCallsAccountingSystem.DAL.Repositories
 
         public async Task<List<CallModel>> GetAll()
         {
-            var context = _context.GetContext();
-            var calls = await context.Calls
+            var calls = await _context.Calls
                 .Where(x => !x.IsDeleted)
                 .Include(x => x.CallProfile)
                 .SelectMany(x => x.CallProfile)
@@ -104,8 +96,7 @@ namespace ContactsAndCallsAccountingSystem.DAL.Repositories
 
         public async Task<List<CallModel>> GetCallsByPeriodAndPhone(DateTime startDate, DateTime endDate, string phoneNumber)
         {
-            var context = _context.GetContext();
-            var calls = await context.Calls
+            var calls = await _context.Calls
                 .Where(x => !x.IsDeleted)
                 .Include(x => x.CallProfile.Where(y => y.PhoneProfile == phoneNumber))
                 .Where(x => x.StartDate >= startDate && x.EndDate <= endDate)
