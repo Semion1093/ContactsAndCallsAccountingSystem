@@ -1,4 +1,4 @@
-﻿namespace ContactsAndCallsAccountingSystem.BLL.Exeptions
+﻿namespace ContactsAndCallsAccountingSystem.BLL.Exceptions
 {
     public class EntityNotFoundException : Exception
     {

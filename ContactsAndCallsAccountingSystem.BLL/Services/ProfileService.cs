@@ -1,5 +1,4 @@
-﻿using ContactsAndCallsAccountingSystem.BLL.Exeptions;
-using ContactsAndCallsAccountingSystem.BLL.Exсeptions;
+﻿using ContactsAndCallsAccountingSystem.BLL.Exceptions;
 using ContactsAndCallsAccountingSystem.BLL.Interfaces;
 using ContactsAndCallsAccountingSystem.BLL.Models;
 

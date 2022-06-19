@@ -1,6 +1,6 @@
-﻿namespace ContactsAndCallsAccountingSystem.BLL.Exсeptions
+﻿namespace ContactsAndCallsAccountingSystem.BLL.Exceptions
 {
-    internal class ConflictException : Exception
+    public class ConflictException : Exception
     {
         public ConflictException(string message) : base(message) { }
     }

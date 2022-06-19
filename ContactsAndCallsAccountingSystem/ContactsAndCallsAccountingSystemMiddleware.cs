@@ -1,4 +1,4 @@
-﻿using ContactsAndCallsAccountingSystem.BLL.Exeptions;
+﻿using ContactsAndCallsAccountingSystem.BLL.Exceptions;
 using System.Net;
 using System.Text.Json;
 
@@ -20,6 +20,10 @@ namespace ContactsAndCallsAccountingSystem.API
                 await _next(context);
             }
             catch (EntityNotFoundException ex)
+            {
+                await HandleExceptionAsync(context, HttpStatusCode.NotFound, ex.Message);
+            }
+            catch (ConflictException ex)
             {
                 await HandleExceptionAsync(context, HttpStatusCode.NotFound, ex.Message);
             }

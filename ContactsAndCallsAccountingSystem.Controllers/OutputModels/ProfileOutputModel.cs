@@ -2,9 +2,9 @@
 {
     public class ProfileOutputModel
     {
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? Patronymic { get; set; }
-        public string? PhoneNumber { get; set; }
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string Patronymic { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
     }
 }
