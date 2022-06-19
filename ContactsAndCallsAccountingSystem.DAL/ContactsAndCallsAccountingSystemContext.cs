@@ -13,11 +13,6 @@ namespace ContactsAndCallsAccountingSystem.DAL
         public DbSet<CallProfile> CallProfile { get; set; }
         public DbSet<Profile> Profiles { get; set; }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("Server=SIMO\\SQLEXPRESS;Database=ContactsAndCalls.DB;Trusted_Connection=True");
-        //}
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CallProfile>()
