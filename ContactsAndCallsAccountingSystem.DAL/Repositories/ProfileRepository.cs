@@ -8,10 +8,10 @@ namespace ContactsAndCallsAccountingSystem.DAL.Repositories
 {
     public class ProfileRepository : IProfileRepository
     {
-        private ContactsAndCallsAccountingSystemContext _context;
-        private IMapper _mapper;
+        private readonly IContextFactory _context;
+        private readonly IMapper _mapper;
 
-        public ProfileRepository(ContactsAndCallsAccountingSystemContext context, IMapper mapper)
+        public ProfileRepository(IContextFactory context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -20,28 +20,32 @@ namespace ContactsAndCallsAccountingSystem.DAL.Repositories
         public async Task AddProfile(ProfileModel profileModel)
         {
             var profile = _mapper.Map<Profile>(profileModel);
-            _context.Profiles.Add(profile);
-            await _context.SaveChangesAsync();
+            var context = _context.GetContext();
+            context.Profiles.Add(profile);
+            await context.SaveChangesAsync();
         }
 
         public async Task UpdateProfile(ProfileModel profileModel)
         {
             var profile = _mapper.Map<Profile>(profileModel);
-            _context.Update(profile);
+            var context = _context.GetContext();
+            context.Update(profile);
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         public async Task DeleteProfile(string phoneNumber)
         {
-            _context.Entry(new Profile { PhoneNumber = phoneNumber, IsDeleted = true })
+            var context = _context.GetContext();
+            context.Entry(new Profile { PhoneNumber = phoneNumber, IsDeleted = true })
                 .Property(x => x.IsDeleted).IsModified = true;
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         public async Task<ProfileModel> GetProfileByPhoneNumber(string phoneNumber)
         {
-            var profile = await _context.Profiles
+            var context = _context.GetContext();
+            var profile = await context.Profiles
                 .Where(x => !x.IsDeleted)
                 .FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber);
 
@@ -50,7 +54,8 @@ namespace ContactsAndCallsAccountingSystem.DAL.Repositories
 
         public async Task<List<ProfileModel>> GetAllProfiles()
         {
-            var profiles = await _context.Profiles
+            var context = _context.GetContext();
+            var profiles = await context.Profiles
                 .Where(x => !x.IsDeleted)
                 .ToListAsync();
 

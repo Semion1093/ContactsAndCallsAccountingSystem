@@ -8,14 +8,14 @@ namespace ContactsAndCallsAccountingSystem.API
     {
         public static void AddServices(this IServiceCollection services)
         {
-            services.AddScoped<ICallService, CallService>();
-            services.AddScoped<IProfileService, ProfileService>();
+            services.AddSingleton<ICallService, CallService>();
+            services.AddSingleton<IProfileService, ProfileService>();
         }
 
         public static void AddRepositories(this IServiceCollection services)
         {
-            services.AddScoped<ICallRepository, CallRepository>();
-            services.AddScoped<IProfileRepository, ProfileRepository>();
+            services.AddSingleton<ICallRepository, CallRepository>();
+            services.AddSingleton<IProfileRepository, ProfileRepository>();
         }
     }
 }

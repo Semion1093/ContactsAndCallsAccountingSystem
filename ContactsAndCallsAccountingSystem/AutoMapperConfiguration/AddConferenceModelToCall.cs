@@ -19,7 +19,6 @@ namespace ContactsAndCallsAccountingSystem.AutoMapperConfiguration
                 {
                     Billing = x.Billing,
                     PhoneProfile = x.PhoneNumber,
-
                 }
                 ).ToList()
             };

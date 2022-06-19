@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ContactsAndCallsAccountingSystem.DAL.Migrations
 {
     [DbContext(typeof(ContactsAndCallsAccountingSystemContext))]
-    [Migration("20220619103327_Init")]
-    partial class Init
+    [Migration("20220619162206_Initupdate-database")]
+    partial class Initupdatedatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

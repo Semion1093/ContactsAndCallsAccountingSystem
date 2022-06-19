@@ -10,9 +10,10 @@ namespace ContactsAndCallsAccountingSystem.AutoMapperConfiguration
             CreateMap<AddCallModel, Call>().ConvertUsing<AddCallModelToCall>();
             CreateMap<AddConferenceModel, Call>().ConvertUsing<AddConferenceModelToCall>();
 
-            CreateMap<Call, CallModel>().ReverseMap();
+            CreateMap<CallModel, Call>();
+            CreateMap<Call, CallModel>();
             CreateMap<Profile, ProfileModel>().ReverseMap();
-            CreateMap<CallProfile, CallModel>().ReverseMap();
+            CreateMap<CallProfile, CallModel>();
         }
     }
 }

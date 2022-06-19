@@ -5,12 +5,18 @@ namespace ContactsAndCallsAccountingSystem.DAL
 {
     public class ContactsAndCallsAccountingSystemContext : DbContext
     {
+        public ContactsAndCallsAccountingSystemContext() { }
         public ContactsAndCallsAccountingSystemContext(
             DbContextOptions<ContactsAndCallsAccountingSystemContext> options) : base(options) { }
 
         public DbSet<Call> Calls { get; set; }
         public DbSet<CallProfile> CallProfile { get; set; }
         public DbSet<Profile> Profiles { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=SIMO\\SQLEXPRESS;Database=ContactsAndCalls.DB;Trusted_Connection=True");
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
