@@ -103,5 +103,19 @@ namespace ContactsAndCallsAccountingSystem.API.Controllers
 
             return calls;
         }
+
+        [HttpGet("get-calls-by-period-and-phone")]
+        [SwaggerOperation(Summary = "Get all calls by period and phone")]
+        [SwaggerResponse(200, "OK")]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(404, "Not Found")]
+        public async Task<ActionResult<List<CallOutputModel>>> GetCallsByPeriodAndPhone(
+            DateTime startDate, DateTime endDate, string phoneNumber)
+        {
+            var calls = _mapper.Map<List<CallOutputModel>>(
+                await _callService.GetCallsByPeriodAndPhone(startDate, endDate, phoneNumber));
+
+            return calls;
+        }
     }
 }
